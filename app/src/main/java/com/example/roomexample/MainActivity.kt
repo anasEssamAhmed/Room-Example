@@ -12,10 +12,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.example.roomexample.navigation.NavigationHost
+import com.example.roomexample.ui.screens.MainViewModel
 import com.example.roomexample.ui.screens.home.CardOfContact
+import com.example.roomexample.ui.screens.home.HomeScreen
 import com.example.roomexample.ui.screens.home.MyFloatingActionButton
 import com.example.roomexample.ui.theme.RoomExampleTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

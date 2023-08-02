@@ -6,41 +6,15 @@ import com.example.roomexample.data.datasource.local.services.ContactDao
 import com.example.roomexample.data.datasource.local.services.ContactDatabase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import javax.inject.Inject
 
-class Repository(private val dao: ContactDao) {
+class Repository @Inject constructor(private val dao: ContactDao) {
+    suspend fun insertContact(contact: Contact) = dao.insertContact(contact)
 
-    companion object {
-        private var instance : Repository? = null
-        private val application : Application = Application()
-        private val dao = ContactDatabase.getInstance(context = application).dao
-        fun getInstance() : Repository {
-            return instance ?: synchronized(this) {
-                instance ?: Repository(dao).also { instance = it}
-            }
-        }
-    }
+    suspend fun deleteContact(contact: Contact) = dao.deleteContact(contact)
 
-    suspend fun insertContact(contact : Contact) {
-        dao.insertContact(contact)
-    }
+    fun getContact(): Flow<List<Contact>> = dao.getContact()
 
-    suspend fun deleteContact(contact: Contact){
-        dao.deleteContact(contact)
-    }
-
-    suspend fun getContactByFirstName() : Flow<List<Contact>> {
-        val contact = MutableStateFlow(dao.getContactByFirstName())
-        return contact
-    }
-
-    suspend fun getContactByLastName() : Flow<List<Contact>> {
-        val contact = MutableStateFlow(dao.getContactByLastName())
-        return contact
-    }
-
-    suspend fun getContactByPhoneNumber() : Flow<List<Contact>> {
-        val contact = MutableStateFlow(dao.getContactByPhoneNumber())
-        return contact
-    }
+    fun getContactById(id:Int) : Flow<Contact> = dao.getContactById(id)
 
 }
